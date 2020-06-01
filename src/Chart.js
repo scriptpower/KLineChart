@@ -12,9 +12,10 @@
  * limitations under the License.
  */
 
-import ChartPane, { CANDLE_STICK_PANE_TAG } from './pane/ChartPane'
+import ChartPane from './pane/ChartPane'
 import { isArray, clone } from './utils/typeChecks'
 import { GraphicMarkType } from './data/ChartData'
+import { CANDLE_STICK_PANE_TAG } from './pane/const'
 
 export default class Chart {
   constructor (container, styleOptions) {

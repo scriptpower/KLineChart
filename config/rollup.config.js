@@ -40,7 +40,7 @@ const getOutputConfig = (fileName) => {
     file: `dist/klinecharts.${fileName}.js`,
     format: 'umd',
     name: 'klinecharts',
-    sourcemap: fileName === 'development',
+    sourcemap: fileName === 'dev',
     indent: false,
     banner: `
 /**
@@ -56,14 +56,14 @@ module.exports = [
   // umd development
   {
     input: inputPath,
-    output: getOutputConfig('development'),
+    output: getOutputConfig('dev'),
     plugins: getPlugins('development')
   },
 
   // umd production
   {
     input: inputPath,
-    output: getOutputConfig('production.min'),
+    output: getOutputConfig('prd.min'),
     plugins: getPlugins('production')
   }
 ]

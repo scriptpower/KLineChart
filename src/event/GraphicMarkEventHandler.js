@@ -18,7 +18,7 @@ import {
   getParallelLines, getFibonacciLines
 } from '../utils/graphic'
 import { isFunction } from '../utils/typeChecks'
-import { CANDLE_STICK_PANE_TAG } from '../pane/ChartPane'
+import { CANDLE_STICK_PANE_TAG } from '../pane/const'
 import { GraphicMarkType } from '../data/ChartData'
 import EventHandler from './EventHandler'
 
