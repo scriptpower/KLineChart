@@ -113,6 +113,16 @@ export default class EventBase {
     this._resetClickTimeout()
   }
 
+  // 判断视窗是否已旋转过
+  _isRotated() {
+    const {_options} = this
+    if(_options) {
+      const {isRotated} = _options
+      return typeof isRotated === 'function' ? !!isRotated() : !!isRotated
+    }
+    return false
+  }
+
   _mouseEnterHandler (enterEvent) {
     if (this._unsubscribeMousemove) {
       this._unsubscribeMousemove()
@@ -501,17 +511,26 @@ export default class EventBase {
       eventLike = event
     }
 
+    const isRotated = this._isRotated()
+
     const box = getBoundingClientRect(this._target)
+    const {pageX, pageY, screenX, screenY} = eventLike
+    let {clientX, clientY} = eventLike
+    if(isRotated) {
+      clientX = eventLike.clientY
+      clientY = box.width - eventLike.clientX
+    }
 
     return {
-      clientX: eventLike.clientX,
-      clientY: eventLike.clientY,
-      pageX: eventLike.pageX,
-      pageY: eventLike.pageY,
-      screenX: eventLike.screenX,
-      screenY: eventLike.screenY,
-      localX: eventLike.clientX - box.left,
-      localY: eventLike.clientY - box.top,
+      isRotated,
+      clientX: clientX,
+      clientY: clientY,
+      pageX,
+      pageY,
+      screenX,
+      screenY,
+      localX: clientX - box.left,
+      localY: clientY - box.top,
 
       ctrlKey: event.ctrlKey,
       altKey: event.altKey,

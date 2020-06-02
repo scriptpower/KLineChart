@@ -19,7 +19,7 @@ import { GraphicMarkType } from '../data/ChartData'
 import KeyBoardEventHandler from './KeyBoardEventHandler'
 
 export default class ChartEvent {
-  constructor (target, chartData, xAxis, yAxis) {
+  constructor (target, chartData, xAxis, yAxis, isRotated) {
     this._target = target
     this._chartData = chartData
     this._paneSize = {}
@@ -37,7 +37,8 @@ export default class ChartEvent {
       longTapEvent: this._longTapEvent.bind(this)
     }, {
       treatVertTouchDragAsPageScroll: false,
-      treatHorzTouchDragAsPageScroll: false
+      treatHorzTouchDragAsPageScroll: false,
+      isRotated
     })
     this._boundKeyBoardDownEvent = this._keyBoardDownEvent.bind(this)
     this._target.addEventListener('keydown', this._boundKeyBoardDownEvent)

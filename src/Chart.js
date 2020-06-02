@@ -22,6 +22,16 @@ export default class Chart {
     this._chartPane = new ChartPane(container, styleOptions)
   }
 
+  emit(...args) {
+    this._chartPane.chartData().emit(...args)
+  }
+  on(...args) {
+    this._chartPane.chartData().on(...args)
+  }
+  off(...args) {
+    this._chartPane.chartData().off(...args)
+  }
+
   /**
    * 设置样式配置
    * @param options
@@ -81,6 +91,7 @@ export default class Chart {
    */
   resize () {
     this._chartPane.measurePaneSize()
+    this.emit('resize')
   }
 
   /**

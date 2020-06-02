@@ -20,6 +20,7 @@ import technicalIndicatorCalcParams from './technicalindicator/technicalIndicato
 import { formatValue } from '../utils/format'
 import { createNewTechnicalIndicator, createTechnicalIndicators } from './technicalindicator/technicalIndicatorControl'
 import { DEV } from '../utils/env'
+import { Emitter } from '../Emitter'
 
 export const InvalidateLevel = {
   NONE: 0,
@@ -51,6 +52,8 @@ const MIN_DATA_SPACE = 3
 
 export default class ChartData {
   constructor (styleOptions, invalidateHandler) {
+    // EventEmitter
+    this._emitter = new Emitter()
     // 刷新持有者
     this._invalidateHandler = invalidateHandler
     // 样式配置
@@ -142,6 +145,18 @@ export default class ChartData {
       // 斐波那契线
       fibonacciLine: []
     }
+  }
+
+  emit(...args) {
+    this._emitter.emit(...args)
+  }
+
+  on(...args) {
+    this._emitter.on(...args)
+  }
+
+  off(...args) {
+    this._emitter.off(...args)
   }
 
   /**
@@ -496,6 +511,8 @@ export default class ChartData {
       this._offsetRightBarCount += (floatIndexAtZoomPoint - this.coordinateToFloatIndex(point.x))
       this.adjustOffsetBarCount()
       this._invalidateHandler()
+      const {_from, _to} = this
+      this.emit('zoom', {scale, point, from: _from, to: _to})
     }
   }
 

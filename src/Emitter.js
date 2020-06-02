@@ -12,8 +12,55 @@
  * limitations under the License.
  */
 
-export default class Emitter {
-  constructor () {
-    
+export class Emitter {
+  constructor(_e = {}) {
+    this._e = _e;
+  }
+  /**
+   * Register an event handler for the given type.
+   *
+   * @param  type	Type of event to listen for, or `"*"` for all events
+   * @param  handler Function to call in response to given event
+   * @memberOf mitt
+   */
+  on(type, handler) {
+    const handles = this._e;
+    const a = handles[type] || [];
+    a.push(handler);
+    handles[type] = a;
+    return this;
+  }
+  /**
+   * Remove an event handler for the given type.
+   *
+   * @param  type	Type of event to unregister `handler` from, or `"*"`
+   * @param  handler Handler function to remove
+   * @memberOf mitt
+   */
+  off(type, handler) {
+    const a = this._e[type];
+    if (a) {
+      a.splice(a.indexOf(handler) >>> 0, 1);
+    }
+    return this;
+  }
+  /**
+   * Invoke all handlers for the given type.
+   * @param type  The event type to invoke
+   * @param {Any} [evt]  Any value (object is recommended and powerful), passed to each handler
+   * @memberOf mitt
+   */
+  emit(type, ...args) {
+    // TODO: asap ?
+    // setTimeout(() => {
+      const handles = this._e;
+      const a = handles[type];
+      if (a) {
+        a.slice().map((cb) => {
+          cb(...args);
+        });
+      }
+    // }, 0);
+    return this;
   }
 }

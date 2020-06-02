@@ -48,10 +48,12 @@ export default class ChartPane {
       technicalIndicatorType: MA,
       tag: CANDLE_STICK_PANE_TAG
     })
+    const isRotated = styleOptions ? styleOptions.isRotated : null
     this._chartEvent = new ChartEvent(
       this._chartContainer, this._chartData,
       this._xAxisPane.xAxis(),
-      this._candleStickPane.yAxis()
+      this._candleStickPane.yAxis(),
+      isRotated
     )
     this.measurePaneSize()
   }
