@@ -37,9 +37,9 @@ const getPlugins = (env) => {
 
 const getOutputConfig = (fileName) => {
   return {
-    file: `dist/klinecharts.${fileName}.js`,
+    file: `dist/k-charts.${fileName}.js`,
     format: 'umd',
-    name: 'klinecharts',
+    name: 'KCharts',
     sourcemap: fileName === 'dev',
     indent: false,
     banner: `

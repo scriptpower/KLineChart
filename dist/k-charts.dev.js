@@ -7,7 +7,7 @@
 (function (global, factory) {
 typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 typeof define === 'function' && define.amd ? define(['exports'], factory) :
-(global = global || self, factory(global.klinecharts = {}));
+(global = global || self, factory(global.KCharts = {}));
 }(this, (function (exports) { 'use strict';
 
 function _typeof(obj) {
@@ -11510,4 +11510,4 @@ exports.version = version;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=klinecharts.dev.js.map
+//# sourceMappingURL=k-charts.dev.js.map

@@ -1,9 +1,9 @@
 # KLineChart
-[![npm version](https://badgen.net/npm/v/klinecharts)](https://www.npmjs.com/package/klinecharts)
+[![npm version](https://badgen.net/npm/v/k-charts)](https://www.npmjs.com/package/k-charts)
 [![Build Status](https://travis-ci.org/liihuu/KLineChart.svg?branch=master)](https://travis-ci.org/liihuu/KLineChart)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/44d60927c56540cfb64a0f476afbc96d)](https://www.codacy.com/manual/liihuu/KLineChart?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=liihuu/KLineChart&amp;utm_campaign=Badge_Grade)
-[![size](https://badgen.net/bundlephobia/minzip/klinecharts@latest)](https://bundlephobia.com/result?p=klinecharts@latest)
-[![types](https://badgen.net/npm/types/klinecharts)](types/index.d.ts)
+[![size](https://badgen.net/bundlephobia/minzip/k-charts@latest)](https://bundlephobia.com/result?p=k-charts@latest)
+[![types](https://badgen.net/npm/types/k-charts)](types/index.d.ts)
 [![NPM](https://badgen.net/github/license/liihuu/KLineChart)](LICENSE)
 
 📈Lightweight k-line chart built with html5 canvas. Support parameter setting of technical indicators, support custom indicators, draw marker lines, and support custom styles.
@@ -11,11 +11,11 @@
 ## Installing
 ### Using npm
 ```bash
-npm install klinecharts --save
+npm install k-charts --save
 ```
 ### CDN
 You can use [unpkg](https://unpkg.com):<br/>
-https://unpkg.com/klinecharts/dist/klinecharts.production.min.js
+https://unpkg.com/k-charts/dist/k-charts.production.min.js
 
 ## Docs
 + [中文](./docs/zh-CN/README.md)
@@ -38,7 +38,7 @@ The generated files are in the dist folder.
 [https://github.com/liihuu/TechnicalIndicator](https://github.com/liihuu/TechnicalIndicator)
 
 ### Sample Code
-[https://github.com/liihuu/KLineChartSample](https://github.com/liihuu/KLineChartSample)
+[https://github.com/liihuu/k-chartsample](https://github.com/liihuu/k-chartsample)
 
 
 ## License

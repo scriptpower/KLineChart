@@ -1,12 +1,12 @@
 ## Getting started
 ### Installation
 ```bash
-npm install klinecharts --save
+npm install k-charts --save
 ```
 
 ### Create your first chart
 ```js
-import { init } from 'klinecharts'
+import { init } from 'k-charts'
 // init
 const chart = init('container_id')
 // Add data
@@ -178,13 +178,13 @@ In theory, the chart can run on any browser that supports canvas. If the chart c
 Introduce core-js example：
 ```js
 import 'core-js'
-import { init } from 'klinecharts'
+import { init } from 'k-charts'
 ```
 Introduce Intl.js example：
 ```js
 import 'intl'
 import 'intl/locale-data/jsonp/en'
-import { init } from 'klinecharts'
+import { init } from 'k-charts'
 ```
 Note: Both core and Intl need to be referenced in the chart library.
 
