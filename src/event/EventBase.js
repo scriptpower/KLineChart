@@ -516,7 +516,11 @@ export default class EventBase {
     const box = getBoundingClientRect(this._target)
     const {pageX, pageY, screenX, screenY} = eventLike
     let {clientX, clientY} = eventLike
+    let localX= clientX - box.left,
+        localY= clientY - box.top
     if(isRotated) {
+      localX= box.top + box.height - clientY
+      localY= clientX - box.left
       clientX = eventLike.clientY
       clientY = box.width - eventLike.clientX
     }
@@ -529,8 +533,8 @@ export default class EventBase {
       pageY,
       screenX,
       screenY,
-      localX: clientX - box.left,
-      localY: clientY - box.top,
+      localX,
+      localY,
 
       ctrlKey: event.ctrlKey,
       altKey: event.altKey,
