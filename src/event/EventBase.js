@@ -31,7 +31,14 @@ const DELAY_RESET_CLICK = 500
 const DELAY_LONG_TAG = 600
 
 function getBoundingClientRect (element) {
-  return element.getBoundingClientRect() || { left: 0, top: 0 }
+  return element.getBoundingClientRect() || {
+    width: 0,
+    height: 0,
+    bottom: 0,
+    left:0,
+    right: 0,
+    top: 0
+  }
 }
 
 function isTouchEvent (event) {
@@ -514,7 +521,7 @@ export default class EventBase {
     const isRotated = this._isRotated()
 
     const box = getBoundingClientRect(this._target)
-    const {pageX, pageY, screenX, screenY} = eventLike
+    const {pageX, pageY, screenX, screenY} = eventLike  // TODO: 旋转待处理
     let {clientX, clientY} = eventLike
     let localX= clientX - box.left,
         localY= clientY - box.top
