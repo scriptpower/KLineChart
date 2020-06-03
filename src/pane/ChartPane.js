@@ -37,7 +37,7 @@ export default class ChartPane {
     this._initChartContainer(container)
     this._technicalIndicatorBaseId = 0
     this._technicalIndicatorPanes = []
-    this._separatorPanes = []
+    this._separatorPanes = [] // 分离器
     this._separatorDragStartTechnicalIndicatorHeight = 0
     this._chartData = new ChartData(styleOptions, this._updatePane.bind(this))
     this._xAxisPane = new XAxisPane({ container: this._chartContainer, chartData: this._chartData })

@@ -415,7 +415,8 @@ const defaultFloatLayer = {
         marginTop: 6,
         marginRight: 8,
         marginBottom: 0,
-        marginLeft: 8
+        marginLeft: 8,
+        showName: true
       },
       point: {
         display: true,

@@ -180,6 +180,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     }
     const plots = technicalIndicator.plots
     const floatLayerPromptTechnicalIndicatorText = this._chartData.styleOptions().floatLayer.prompt.technicalIndicator.text
+    const showName = floatLayerPromptTechnicalIndicatorText.showName !== false
     const nameText = data.name
     const labels = data.labels
     const values = data.values
@@ -192,10 +193,12 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     const colorSize = colors.length
     this._ctx.textBaseline = 'top'
     this._ctx.font = getFont(textSize, floatLayerPromptTechnicalIndicatorText.family)
-    const nameTextWidth = calcTextWidth(this._ctx, nameText)
-    this._ctx.fillStyle = textColor
-    this._ctx.fillText(nameText, labelX, labelY)
-    labelX += (textMarginLeft + nameTextWidth)
+    if(nameText && showName) {
+      const nameTextWidth = calcTextWidth(this._ctx, nameText)
+      this._ctx.fillStyle = textColor
+      this._ctx.fillText(nameText, labelX, labelY)
+      labelX += (textMarginLeft + nameTextWidth)
+    }
     let lineCount = 0
     for (let i = 0; i < labels.length; i++) {
       switch (plots[i].type) {
