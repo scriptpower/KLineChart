@@ -59,7 +59,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
     let labelX = textMarginLeft
     const labelY = floatLayerPromptCandleStick.text.marginTop
     labels.forEach((label, i) => {
-      const labelText = label ? `${label}: ` : ''
+      const labelText = label ? `${label}：` : ''
       const labelWidth = calcTextWidth(this._ctx, labelText)
       this._ctx.fillStyle = textColor
       this._ctx.fillText(labelText, labelX, labelY)

@@ -18,12 +18,30 @@ import { isValid } from '../utils/typeChecks'
 import { calcTextWidth, drawHorizontalLine, drawVerticalLine, getFont } from '../utils/canvas'
 import { getTechnicalIndicatorInfo } from '../data/technicalindicator/technicalIndicatorControl'
 
+const _asyncEmitTimers = {}
+
 export default class TechnicalIndicatorFloatLayerView extends View {
   constructor (container, chartData, xAxis, yAxis, additionalDataProvider) {
     super(container, chartData)
     this._xAxis = xAxis
     this._yAxis = yAxis
     this._additionalDataProvider = additionalDataProvider
+
+    // 
+  }
+
+  // // 异步发消息
+  _asyncEmit(evtName, data, ms) {
+    if(_asyncEmitTimers[evtName]) {
+      clearTimeout(_asyncEmitTimers[evtName])
+    }
+    _asyncEmitTimers[evtName] = setTimeout(() => {
+      _asyncEmitTimers[evtName] = null
+      const {_chartData} = this
+      if(_chartData && _chartData.emit) {
+        _chartData.emit(evtName, data)
+      }
+    }, ms || 0)
   }
 
   _draw () {
@@ -40,8 +58,9 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     let realDataPos = dataPos
     let kLineData = dataList[dataPos]
     let technicalIndicatorData = technicalIndicatorResult[dataPos]
+    const from = this._chartData.from()
+    const to = this._chartData.to()
     if (!kLineData) {
-      const to = this._chartData.to()
       if (dataPos > to - 1) {
         kLineData = dataList[to - 1]
         technicalIndicatorData = technicalIndicatorResult[to - 1]
@@ -52,19 +71,34 @@ export default class TechnicalIndicatorFloatLayerView extends View {
         realDataPos = 0
       }
     }
+    let crossHairPaneTag = this._chartData.crossHairPaneTag()
     if (kLineData) {
       const x = this._xAxis.convertToPixel(dataPos)
       this._drawCrossHairHorizontalLine()
       this._drawCrossHairVerticalLine(x)
       const displayRule = this._chartData.styleOptions().floatLayer.prompt.displayRule
+      // this._chartData.emit('cross', {
+      //   pos: dataPos,
+      //   data: kLineData
+      // })
+      // console.log({displayRule, tag: this._chartData.crossHairPaneTag()})
+      crossHairPaneTag = this._chartData.crossHairPaneTag()
       if (displayRule === FloatLayerPromptDisplayRule.ALWAYS ||
-        (displayRule === FloatLayerPromptDisplayRule.FOLLOW_CROSS && this._chartData.crossHairPaneTag())) {
+        (displayRule === FloatLayerPromptDisplayRule.FOLLOW_CROSS && crossHairPaneTag)) {
         this._drawPrompt(
           realDataPos, kLineData, technicalIndicatorData,
           technicalIndicator, x, dataPos >= 0 && dataPos <= dataList.length - 1
         )
       }
     }
+    this._asyncEmit('afterDraw', {
+      from,
+      to,
+      index: dataPos,
+      kline: kLineData,
+      ti: technicalIndicatorData,
+      crossHairPaneTag
+    }, 0)
   }
 
   /**
