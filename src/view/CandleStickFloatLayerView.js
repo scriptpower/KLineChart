@@ -24,11 +24,13 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
     const floatLayerPromptCandleStick = this._chartData.styleOptions().floatLayer.prompt.candleStick
     const candleStickPromptData = this._getCandleStickPromptData(kLineData, floatLayerPromptCandleStick)
     if (floatLayerPromptCandleStick.showType === FloatLayerPromptCandleStickTextDisplayType.STANDARD) {
-      this._drawCandleStickStandardPromptText(floatLayerPromptCandleStick, candleStickPromptData)
+      const {labels, text} = floatLayerPromptCandleStick
+      const labelCount = labels ? labels.length : 0
+      labelCount && this._drawCandleStickStandardPromptText(floatLayerPromptCandleStick, candleStickPromptData)
       if (this._additionalDataProvider.chartType() === ChartType.CANDLE_STICK) {
         this._drawTechnicalIndicatorPrompt(
           dataPos, technicalIndicatorData, technicalIndicator, x, isDrawValueIndicator,
-          floatLayerPromptCandleStick.text.size + floatLayerPromptCandleStick.text.marginTop
+          labelCount ? text.size + text.marginTop : 0
         )
       }
     } else {
