@@ -183,9 +183,9 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     ti, x, isDrawValueIndicator,
     offsetTop = 0
   ) {
-    const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
+    const tiOpts = this._chartData.styleOptions().technicalIndicator
     const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis)
-    const colors = technicalIndicatorOptions.line.colors
+    const colors = tiOpts.line.colors
     this._drawTechnicalIndicatorPromptText(
       dataPos, ti, data, colors, offsetTop
     )
@@ -207,7 +207,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
    */
   _drawTechnicalIndicatorPromptText (dataPos, ti, data, colors, offsetTop) {
     const dataList = this._chartData.dataList()
-    const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
+    const tiOpts = this._chartData.styleOptions().technicalIndicator
     const cbData = {
       preData: { kLineData: dataList[dataPos - 1], technicalIndicatorData: ti.result[dataPos - 1] },
       currentData: { kLineData: dataList[dataPos], technicalIndicatorData: ti.result[dataPos] }
@@ -237,11 +237,11 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     for (let i = 0; i < labels.length; i++) {
       switch (plots[i].type) {
         case PlotType.CIRCLE: {
-          this._ctx.fillStyle = (plots[i].color && plots[i].color(cbData, technicalIndicatorOptions)) || technicalIndicatorOptions.circle.noChangeColor
+          this._ctx.fillStyle = (plots[i].color && plots[i].color(cbData, tiOpts)) || tiOpts.circle.noChangeColor
           break
         }
         case PlotType.BAR: {
-          this._ctx.fillStyle = (plots[i].color && plots[i].color(cbData, technicalIndicatorOptions)) || technicalIndicatorOptions.bar.noChangeColor
+          this._ctx.fillStyle = (plots[i].color && plots[i].color(cbData, tiOpts)) || tiOpts.bar.noChangeColor
           break
         }
         default: {

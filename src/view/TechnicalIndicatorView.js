@@ -76,7 +76,7 @@ export default class TechnicalIndicatorView extends View {
     const ti = this._additionalDataProvider.technicalIndicator()
     const plots = ti.plots
     const lines = []
-    const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
+    const tiOpts = this._chartData.styleOptions().technicalIndicator
     const dataList = this._chartData.dataList()
     const technicalIndicatorResult = ti.result
     let baseValue = ti.baseValue
@@ -103,7 +103,7 @@ export default class TechnicalIndicatorView extends View {
                   x,
                   y: valueY,
                   radius: halfBarSpace,
-                  color: (plot.color && plot.color(cbData, technicalIndicatorOptions)) || technicalIndicatorOptions.circle.noChangeColor,
+                  color: (plot.color && plot.color(cbData, tiOpts)) || tiOpts.circle.noChangeColor,
                   isStroke: plot.isStroke
                     ? plot.isStroke(cbData)
                     : true
@@ -130,7 +130,7 @@ export default class TechnicalIndicatorView extends View {
                 } else {
                   bar.y = baseValueY
                 }
-                bar.color = (plot.color && plot.color(cbData, technicalIndicatorOptions)) || technicalIndicatorOptions.bar.noChangeColor
+                bar.color = (plot.color && plot.color(cbData, tiOpts)) || tiOpts.bar.noChangeColor
                 bar.isStroke = plot.isStroke
                   ? plot.isStroke(cbData)
                   : false
@@ -161,7 +161,7 @@ export default class TechnicalIndicatorView extends View {
         })
       },
       () => {
-        this._drawLines(lines, technicalIndicatorOptions)
+        this._drawLines(lines, tiOpts)
       }
     )
   }
@@ -169,12 +169,12 @@ export default class TechnicalIndicatorView extends View {
   /**
    * 绘制线
    * @param lines
-   * @param technicalIndicatorOptions
+   * @param tiOpts
    */
-  _drawLines (lines, technicalIndicatorOptions) {
-    const colors = technicalIndicatorOptions.line.colors
+  _drawLines (lines, tiOpts) {
+    const colors = tiOpts.line.colors
     const colorSize = (colors || []).length
-    this._ctx.lineWidth = technicalIndicatorOptions.line.size
+    this._ctx.lineWidth = tiOpts.line.size
     drawLine(this._ctx, () => {
       lines.forEach((lineItem, i) => {
         this._ctx.strokeStyle = colors[i % colorSize]

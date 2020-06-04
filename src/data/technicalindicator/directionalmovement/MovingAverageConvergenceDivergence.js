@@ -27,15 +27,15 @@ export default class MovingAverageConvergenceDivergence extends TechnicalIndicat
         {
           key: 'macd',
           type: 'bar',
-          color: (data, technicalIndicatorOptions) => {
+          color: (data, tiOpts) => {
             const { currentData } = data
             const macd = (currentData.technicalIndicatorData || {}).macd
             if (macd > 0) {
-              return technicalIndicatorOptions.bar.upColor
+              return tiOpts.bar.upColor
             } else if (macd < 0) {
-              return technicalIndicatorOptions.bar.downColor
+              return tiOpts.bar.downColor
             } else {
-              return technicalIndicatorOptions.bar.noChangeColor
+              return tiOpts.bar.noChangeColor
             }
           },
           isStroke: (data) => {
