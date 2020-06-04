@@ -47,8 +47,8 @@ export default class TechnicalIndicatorFloatLayerView extends View {
   _draw () {
     const crossHairPoint = this._chartData.crossHairPoint()
     const dataList = this._chartData.dataList()
-    const technicalIndicator = this._additionalDataProvider.technicalIndicator()
-    const technicalIndicatorResult = technicalIndicator.result
+    const ti = this._additionalDataProvider.technicalIndicator()
+    const technicalIndicatorResult = ti.result
     let dataPos
     if (crossHairPoint) {
       dataPos = this._xAxis.convertFromPixel(crossHairPoint.x)
@@ -87,7 +87,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
         (displayRule === FloatLayerPromptDisplayRule.FOLLOW_CROSS && crossHairPaneTag)) {
         this._drawPrompt(
           realDataPos, kLineData, technicalIndicatorData,
-          technicalIndicator, x, dataPos >= 0 && dataPos <= dataList.length - 1
+          ti, x, dataPos >= 0 && dataPos <= dataList.length - 1
         )
       }
     }
@@ -106,13 +106,13 @@ export default class TechnicalIndicatorFloatLayerView extends View {
    * @param dataPos
    * @param kLineData
    * @param technicalIndicatorData
-   * @param technicalIndicator
+   * @param ti
    * @param x
    * @param isDrawValueIndicator 是否需要绘制指示点
    * @private
    */
-  _drawPrompt (dataPos, kLineData, technicalIndicatorData, technicalIndicator, x, isDrawValueIndicator) {
-    this._drawTechnicalIndicatorPrompt(dataPos, technicalIndicatorData, technicalIndicator, x, isDrawValueIndicator)
+  _drawPrompt (dataPos, kLineData, technicalIndicatorData, ti, x, isDrawValueIndicator) {
+    this._drawTechnicalIndicatorPrompt(dataPos, technicalIndicatorData, ti, x, isDrawValueIndicator)
   }
 
   /**
@@ -172,7 +172,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
    * 绘制指标提示
    * @param dataPos
    * @param technicalIndicatorData
-   * @param technicalIndicator
+   * @param ti
    * @param x
    * @param isDrawValueIndicator
    * @param offsetTop
@@ -180,18 +180,18 @@ export default class TechnicalIndicatorFloatLayerView extends View {
    */
   _drawTechnicalIndicatorPrompt (
     dataPos, technicalIndicatorData,
-    technicalIndicator, x, isDrawValueIndicator,
+    ti, x, isDrawValueIndicator,
     offsetTop = 0
   ) {
     const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
-    const data = getTechnicalIndicatorInfo(technicalIndicatorData, technicalIndicator, this._yAxis)
+    const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis)
     const colors = technicalIndicatorOptions.line.colors
     this._drawTechnicalIndicatorPromptText(
-      dataPos, technicalIndicator, data, colors, offsetTop
+      dataPos, ti, data, colors, offsetTop
     )
     if (isDrawValueIndicator) {
       this._drawTechnicalIndicatorPromptPoint(
-        dataPos, technicalIndicator, data.values, colors, x
+        dataPos, ti, data.values, colors, x
       )
     }
   }
@@ -199,20 +199,20 @@ export default class TechnicalIndicatorFloatLayerView extends View {
   /**
    * 绘制指标提示文字
    * @param dataPos
-   * @param technicalIndicator
+   * @param ti
    * @param data
    * @param colors
    * @param offsetTop
    * @private
    */
-  _drawTechnicalIndicatorPromptText (dataPos, technicalIndicator, data, colors, offsetTop) {
+  _drawTechnicalIndicatorPromptText (dataPos, ti, data, colors, offsetTop) {
     const dataList = this._chartData.dataList()
     const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
     const cbData = {
-      preData: { kLineData: dataList[dataPos - 1], technicalIndicatorData: technicalIndicator.result[dataPos - 1] },
-      currentData: { kLineData: dataList[dataPos], technicalIndicatorData: technicalIndicator.result[dataPos] }
+      preData: { kLineData: dataList[dataPos - 1], technicalIndicatorData: ti.result[dataPos - 1] },
+      currentData: { kLineData: dataList[dataPos], technicalIndicatorData: ti.result[dataPos] }
     }
-    const plots = technicalIndicator.plots
+    const plots = ti.plots
     const floatLayerPromptTechnicalIndicatorText = this._chartData.styleOptions().floatLayer.prompt.technicalIndicator.text
     const showName = floatLayerPromptTechnicalIndicatorText.showName !== false
     const nameText = data.name
@@ -259,13 +259,13 @@ export default class TechnicalIndicatorFloatLayerView extends View {
   /**
    * 绘制指标提示点
    * @param dataPos
-   * @param technicalIndicator
+   * @param ti
    * @param values
    * @param colors
    * @param x
    * @private
    */
-  _drawTechnicalIndicatorPromptPoint (dataPos, technicalIndicator, values, colors, x) {
+  _drawTechnicalIndicatorPromptPoint (dataPos, ti, values, colors, x) {
     const floatLayerPromptTechnicalIndicatorPoint = this._chartData.styleOptions().floatLayer.prompt.technicalIndicator.point
     if (!floatLayerPromptTechnicalIndicatorPoint.display) {
       return
@@ -273,7 +273,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     if (!this._chartData.crossHairPaneTag()) {
       return
     }
-    const plots = technicalIndicator.plots
+    const plots = ti.plots
     const colorSize = colors.length
     const valueSize = values.length
     const radius = floatLayerPromptTechnicalIndicatorPoint.radius

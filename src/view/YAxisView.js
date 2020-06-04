@@ -129,20 +129,20 @@ export default class YAxisView extends View {
   _drawTechnicalIndicatorLastValue (yAxisOptions) {
     const technicalIndicatorStyleOptions = this._chartData.styleOptions().technicalIndicator
     const lastValueMarkStyleOptions = technicalIndicatorStyleOptions.lastValueMark
-    const technicalIndicator = this._additionalDataProvider.technicalIndicator()
-    const technicalIndicatorResult = technicalIndicator.result
+    const ti = this._additionalDataProvider.technicalIndicator()
+    const technicalIndicatorResult = ti.result
     const dataSize = technicalIndicatorResult.length
     const technicalIndicatorData = technicalIndicatorResult[dataSize - 1]
     if (!lastValueMarkStyleOptions.display || !technicalIndicatorData) {
       return
     }
     const dataList = this._chartData.dataList()
-    const plots = technicalIndicator.plots
+    const plots = ti.plots
     const cbData = {
       preData: { kLineData: dataList[dataSize - 2], technicalIndicatorData: technicalIndicatorResult[dataSize - 2] },
       currentData: { kLineData: dataList[dataSize - 1], technicalIndicatorData }
     }
-    const precision = technicalIndicator.precision
+    const precision = ti.precision
     const colors = technicalIndicatorStyleOptions.line.colors || []
     const colorSize = colors.length
     let lineCount = 0

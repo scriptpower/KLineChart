@@ -121,21 +121,21 @@ export function createNewTechnicalIndicator ({
 /**
  * 获取技术指标信息
  * @param technicalIndicatorData
- * @param technicalIndicator
+ * @param ti
  * @param yAxis
  * @returns {{values: [], name: string, labels: []}}
  */
-export function getTechnicalIndicatorInfo (technicalIndicatorData = {}, technicalIndicator, yAxis) {
-  const calcParams = technicalIndicator.calcParams
-  const plots = technicalIndicator.plots
-  const precision = technicalIndicator.precision
-  const isVolumeTechnicalIndicator = technicalIndicator.isVolumeTechnicalIndicator
+export function getTechnicalIndicatorInfo (technicalIndicatorData = {}, ti, yAxis) {
+  const calcParams = ti.calcParams
+  const plots = ti.plots
+  const precision = ti.precision
+  const isVolumeTechnicalIndicator = ti.isVolumeTechnicalIndicator
 
   const labels = []
   const values = []
   let name = ''
   if (plots.length > 0) {
-    name = technicalIndicator.name
+    name = ti.name
   }
   if (calcParams.length > 0) {
     name = `${name}(${calcParams.join(',')})`

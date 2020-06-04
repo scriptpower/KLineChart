@@ -20,7 +20,7 @@ import { ChartType, FloatLayerPromptCandleStickTextDisplayType } from '../data/o
 import { getTechnicalIndicatorInfo } from '../data/technicalindicator/technicalIndicatorControl'
 
 export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLayerView {
-  _drawPrompt (dataPos, kLineData, technicalIndicatorData, technicalIndicator, x, isDrawValueIndicator) {
+  _drawPrompt (dataPos, kLineData, technicalIndicatorData, ti, x, isDrawValueIndicator) {
     const floatLayerPromptCandleStick = this._chartData.styleOptions().floatLayer.prompt.candleStick
     const candleStickPromptData = this._getCandleStickPromptData(kLineData, floatLayerPromptCandleStick)
     if (floatLayerPromptCandleStick.showType === FloatLayerPromptCandleStickTextDisplayType.STANDARD) {
@@ -29,19 +29,19 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
       labelCount && this._drawCandleStickStandardPromptText(floatLayerPromptCandleStick, candleStickPromptData)
       if (this._additionalDataProvider.chartType() === ChartType.CANDLE_STICK) {
         this._drawTechnicalIndicatorPrompt(
-          dataPos, technicalIndicatorData, technicalIndicator, x, isDrawValueIndicator,
+          dataPos, technicalIndicatorData, ti, x, isDrawValueIndicator,
           labelCount ? text.size + text.marginTop : 0
         )
       }
     } else {
-      const data = getTechnicalIndicatorInfo(technicalIndicatorData, technicalIndicator, this._yAxis)
+      const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis)
       this._drawCandleStickRectPromptText(
         x, floatLayerPromptCandleStick, candleStickPromptData, data
       )
       if (isDrawValueIndicator) {
         const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
         this._drawTechnicalIndicatorPromptPoint(
-          dataPos, technicalIndicator,
+          dataPos, ti,
           data.values,
           technicalIndicatorOptions.line.colors, x
         )

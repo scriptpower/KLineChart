@@ -665,15 +665,15 @@ export default class ChartData {
   calcTechnicalIndicator (pane) {
     Promise.resolve().then(
       _ => {
-        const technicalIndicator = pane.technicalIndicator()
-        if (technicalIndicator) {
-          technicalIndicator.setCalcParams(this._technicalIndicatorCalcParams[technicalIndicator.name])
-          if (technicalIndicator.isPriceTechnicalIndicator) {
-            technicalIndicator.precision = this._pricePrecision
-          } else if (technicalIndicator.isVolumeTechnicalIndicator) {
-            technicalIndicator.precision = this._volumePrecision
+        const ti = pane.technicalIndicator()
+        if (ti) {
+          ti.setCalcParams(this._technicalIndicatorCalcParams[ti.name])
+          if (ti.isPriceTechnicalIndicator) {
+            ti.precision = this._pricePrecision
+          } else if (ti.isVolumeTechnicalIndicator) {
+            ti.precision = this._volumePrecision
           }
-          technicalIndicator.result = technicalIndicator.calcTechnicalIndicator(this._dataList, technicalIndicator.calcParams) || []
+          ti.result = ti.calcTechnicalIndicator(this._dataList, ti.calcParams) || []
         }
         pane.invalidate(InvalidateLevel.FULL)
       }

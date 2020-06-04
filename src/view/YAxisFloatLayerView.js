@@ -51,10 +51,10 @@ export default class YAxisFloatLayerView extends View {
       const fromClose = this._chartData.dataList()[this._chartData.from()].close
       yAxisDataLabel = `${((value - fromClose) / fromClose * 100).toFixed(2)}%`
     } else {
-      const technicalIndicator = this._additionalDataProvider.technicalIndicator()
-      const precision = technicalIndicator.precision
+      const ti = this._additionalDataProvider.technicalIndicator()
+      const precision = ti.precision
       yAxisDataLabel = formatPrecision(value, precision)
-      if (technicalIndicator.isVolumeTechnicalIndicator) {
+      if (ti.isVolumeTechnicalIndicator) {
         yAxisDataLabel = formatBigNumber(yAxisDataLabel)
       }
     }

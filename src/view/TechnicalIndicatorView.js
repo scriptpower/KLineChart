@@ -73,13 +73,13 @@ export default class TechnicalIndicatorView extends View {
    * @private
    */
   _drawTechnicalIndicator () {
-    const technicalIndicator = this._additionalDataProvider.technicalIndicator()
-    const plots = technicalIndicator.plots
+    const ti = this._additionalDataProvider.technicalIndicator()
+    const plots = ti.plots
     const lines = []
     const technicalIndicatorOptions = this._chartData.styleOptions().technicalIndicator
     const dataList = this._chartData.dataList()
-    const technicalIndicatorResult = technicalIndicator.result
-    let baseValue = technicalIndicator.baseValue
+    const technicalIndicatorResult = ti.result
+    let baseValue = ti.baseValue
     if (!isValid(baseValue)) {
       baseValue = this._yAxis.min()
     }

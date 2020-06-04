@@ -68,12 +68,12 @@ export default class YAxis extends Axis {
 
   /**
    * 计算最大最小值
-   * @param technicalIndicator
+   * @param ti
    * @param isRealTime
    */
-  calcMinMaxValue (technicalIndicator, isRealTime) {
+  calcMinMaxValue (ti, isRealTime) {
     const dataList = this._chartData.dataList()
-    const technicalIndicatorResult = technicalIndicator.result
+    const technicalIndicatorResult = ti.result
     const from = this._chartData.from()
     const to = this._chartData.to()
     const isShowAverageLine = this._chartData.styleOptions().realTime.averageLine.display
@@ -91,7 +91,7 @@ export default class YAxis extends Axis {
         }
       }
     } else {
-      const plots = technicalIndicator.plots || []
+      const plots = ti.plots || []
       for (let i = from; i < to; i++) {
         const kLineData = dataList[i]
         const technicalIndicatorData = technicalIndicatorResult[i] || {}
@@ -108,11 +108,11 @@ export default class YAxis extends Axis {
         }
       }
     }
-    if (isValid(technicalIndicator.minValue) && isNumber(technicalIndicator.minValue)) {
-      minMaxArray[0] = technicalIndicator.minValue
+    if (isValid(ti.minValue) && isNumber(ti.minValue)) {
+      minMaxArray[0] = ti.minValue
     }
-    if (isValid(technicalIndicator.maxValue) && isNumber(technicalIndicator.maxValue)) {
-      minMaxArray[1] = technicalIndicator.maxValue
+    if (isValid(ti.maxValue) && isNumber(ti.maxValue)) {
+      minMaxArray[1] = ti.maxValue
     }
     if (minMaxArray[0] !== Infinity && minMaxArray[1] !== -Infinity) {
       if (this.isPercentageYAxis()) {
