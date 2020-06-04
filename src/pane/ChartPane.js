@@ -79,12 +79,6 @@ export default class ChartPane {
     this._chartContainer.tabIndex = 1
     container.appendChild(this._chartContainer)
   }
-  
-  // 分割线是否可拖拽
-  _separatorDraggable() {
-    const separator = this._chartData.styleOptions().separator
-    return separator ? !!separator.draggable : false
-  }
 
   /**
    * 分割线拖拽开始
@@ -92,9 +86,7 @@ export default class ChartPane {
    * @private
    */
   _separatorStartDrag (paneIndex) {
-    if(this._separatorDraggable()) {
-      this._separatorDragStartTechnicalIndicatorHeight = this._technicalIndicatorPanes[paneIndex].height()
-    }
+    this._separatorDragStartTechnicalIndicatorHeight = this._technicalIndicatorPanes[paneIndex].height()
   }
 
   /**
@@ -104,14 +96,12 @@ export default class ChartPane {
    * @private
    */
   _separatorDrag (dragDistance, paneIndex) {
-    if(this._separatorDraggable()) {
-      let height = this._separatorDragStartTechnicalIndicatorHeight - dragDistance
-      if (height < 0) {
-        height = 0
-      }
-      this._technicalIndicatorPanes[paneIndex].setHeight(height)
-      this.measurePaneSize()
+    let height = this._separatorDragStartTechnicalIndicatorHeight - dragDistance
+    if (height < 0) {
+      height = 0
     }
+    this._technicalIndicatorPanes[paneIndex].setHeight(height)
+    this.measurePaneSize()
   }
 
   /**

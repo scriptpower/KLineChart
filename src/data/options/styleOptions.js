@@ -463,8 +463,7 @@ const defaultGraphicMark = {
 const defaultSeparator = {
   size: 1,
   color: '#888888',
-  fill: true,
-  draggable: true // 是否可拖动
+  fill: true
 }
 
 export const defaultStyleOptions = {
