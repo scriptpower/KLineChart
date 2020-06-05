@@ -53,12 +53,12 @@ export default class Chart {
 
   /**
    * 加载技术指标参数
-   * @param technicalIndicatorType
+   * @param tiType
    * @param params
    */
-  setTechnicalIndicatorParams (technicalIndicatorType, params) {
-    if (technicalIndicatorType) {
-      this._chartPane.applyTechnicalIndicatorParams(technicalIndicatorType, params)
+  setTechnicalIndicatorParams (tiType, params) {
+    if (tiType) {
+      this._chartPane.applyTechnicalIndicatorParams(tiType, params)
     }
   }
 
@@ -184,42 +184,42 @@ export default class Chart {
 
   /**
    * 设置蜡烛图技术指标类型
-   * @param technicalIndicatorType
+   * @param tiType
    */
-  setCandleStickTechnicalIndicatorType (technicalIndicatorType) {
-    if (technicalIndicatorType) {
-      this._chartPane.setTechnicalIndicatorType(CANDLE_STICK_PANE_TAG, technicalIndicatorType)
+  setCandleStickTechnicalIndicatorType (tiType) {
+    if (tiType) {
+      this._chartPane.setTechnicalIndicatorType(CANDLE_STICK_PANE_TAG, tiType)
     }
   }
 
   /**
    * 设置技术指标类型
    * @param tag
-   * @param technicalIndicatorType
+   * @param tiType
    */
-  setTechnicalIndicatorType (tag, technicalIndicatorType) {
+  setTechnicalIndicatorType (tag, tiType) {
     if (tag) {
-      this._chartPane.setTechnicalIndicatorType(tag, technicalIndicatorType)
+      this._chartPane.setTechnicalIndicatorType(tag, tiType)
     }
   }
 
   /**
    * 创建一个技术指标
-   * @param technicalIndicatorType
+   * @param tiType
    * @param height
    * @param dragEnabled
    * @returns {string}
    */
-  createTechnicalIndicator (technicalIndicatorType, height, dragEnabled) {
-    return this._chartPane.createTechnicalIndicator(technicalIndicatorType, height, dragEnabled)
+  createTechnicalIndicator (tiType, height, dragEnabled) {
+    return this._chartPane.createTechnicalIndicator(tiType, height, dragEnabled)
   }
 
   /**
    * 添加自定义技术指标
-   * @param technicalIndicatorInfo
+   * @param tiInfo
    */
-  addCustomTechnicalIndicator (technicalIndicatorInfo) {
-    this._chartPane.chartData().addCustomTechnicalIndicator(technicalIndicatorInfo)
+  addCustomTechnicalIndicator (tiInfo) {
+    this._chartPane.chartData().addCustomTechnicalIndicator(tiInfo)
   }
 
   /**

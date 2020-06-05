@@ -22,8 +22,8 @@ import YAxis from '../component/YAxis'
 export default class TechnicalIndicatorPane extends Pane {
   constructor (props) {
     super(props)
-    const technicalIndicatorType = props.technicalIndicatorType || MACD
-    this.setTechnicalIndicatorType(technicalIndicatorType)
+    const tiType = props.technicalIndicatorType || MACD
+    this.setTechnicalIndicatorType(tiType)
   }
 
   _initBefore (props) {

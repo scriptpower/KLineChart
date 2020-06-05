@@ -276,16 +276,16 @@ export default class ChartPane {
 
   /**
    * 加载技术指标参数
-   * @param technicalIndicatorType
+   * @param tiType
    * @param params
    */
-  applyTechnicalIndicatorParams (technicalIndicatorType, params) {
-    this._chartData.technicalIndicatorCalcParams()[technicalIndicatorType] = params
-    if (this._candleStickPane.technicalIndicator().name === technicalIndicatorType) {
+  applyTechnicalIndicatorParams (tiType, params) {
+    this._chartData.technicalIndicatorCalcParams()[tiType] = params
+    if (this._candleStickPane.technicalIndicator().name === tiType) {
       this._chartData.calcTechnicalIndicator(this._candleStickPane)
     }
     for (const pane of this._technicalIndicatorPanes) {
-      if (pane.technicalIndicator().name === technicalIndicatorType) {
+      if (pane.technicalIndicator().name === tiType) {
         this._chartData.calcTechnicalIndicator(pane)
       }
     }
@@ -427,11 +427,11 @@ export default class ChartPane {
   /**
    * 设置指标类型
    * @param tag
-   * @param technicalIndicatorType
+   * @param tiType
    */
-  setTechnicalIndicatorType (tag, technicalIndicatorType) {
+  setTechnicalIndicatorType (tag, tiType) {
     if (tag === CANDLE_STICK_PANE_TAG) {
-      this._candleStickPane.setTechnicalIndicatorType(technicalIndicatorType)
+      this._candleStickPane.setTechnicalIndicatorType(tiType)
     } else {
       let p
       for (const pane of this._technicalIndicatorPanes) {
@@ -441,10 +441,10 @@ export default class ChartPane {
         }
       }
       if (p) {
-        if (!this._chartData.technicalIndicator(technicalIndicatorType)) {
+        if (!this._chartData.technicalIndicator(tiType)) {
           this.removeTechnicalIndicator(tag)
         } else {
-          p.setTechnicalIndicatorType(technicalIndicatorType)
+          p.setTechnicalIndicatorType(tiType)
         }
       }
     }

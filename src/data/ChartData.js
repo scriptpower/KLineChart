@@ -223,10 +223,10 @@ export default class ChartData {
 
   /**
    * 根据指标类型获取指标类
-   * @param technicalIndicatorType
+   * @param tiType
    */
-  technicalIndicator (technicalIndicatorType) {
-    return this._technicalIndicators[technicalIndicatorType]
+  technicalIndicator (tiType) {
+    return this._technicalIndicators[tiType]
   }
 
   /**
