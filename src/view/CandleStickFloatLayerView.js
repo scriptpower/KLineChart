@@ -14,7 +14,7 @@
 
 import TechnicalIndicatorFloatLayerView from './TechnicalIndicatorFloatLayerView'
 import { isFunction, isObject } from '../utils/typeChecks'
-import { formatBigNumber, formatDate, formatPrecision, formatValue } from '../utils/format'
+import { formatDate, formatPrecision, formatValue } from '../utils/format'
 import { calcTextWidth, getFont } from '../utils/canvas'
 import { ChartType, FloatLayerPromptCandleStickTextDisplayType } from '../data/options/styleOptions'
 import { getTechnicalIndicatorInfo } from '../data/technicalindicator/technicalIndicatorControl'
@@ -34,7 +34,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
         )
       }
     } else {
-      const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis)
+      const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis, this._chartData.styleOptions().utils.bigNumber)
       this._drawCandleStickRectPromptText(
         x, floatLayerPromptCandleStick, candleStickPromptData, data
       )
@@ -242,6 +242,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
         values = baseValues
       }
     } else {
+      const bigNumber = this._chartData.styleOptions().utils.bigNumber
       const pricePrecision = this._chartData.pricePrecision()
       const volumePrecision = this._chartData.volumePrecision()
       values = [
@@ -259,7 +260,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
             break
           }
           case values.length - 1: {
-            values[index] = formatBigNumber(formatPrecision(value, volumePrecision))
+            values[index] = bigNumber(formatPrecision(value, volumePrecision))
             break
           }
           default: {

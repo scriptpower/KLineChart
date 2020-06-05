@@ -184,7 +184,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
     offsetTop = 0
   ) {
     const tiOpts = this._chartData.styleOptions().technicalIndicator
-    const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis)
+    const data = getTechnicalIndicatorInfo(technicalIndicatorData, ti, this._yAxis, this._chartData.styleOptions().utils.bigNumber)
     const colors = tiOpts.line.colors
     this._drawTechnicalIndicatorPromptText(
       dataPos, ti, data, colors, offsetTop

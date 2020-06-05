@@ -17,7 +17,7 @@ import { defaultStyleOptions } from './options/styleOptions'
 
 import technicalIndicatorCalcParams from './technicalindicator/technicalIndicatorCalcParams'
 
-import { formatValue } from '../utils/format'
+import { formatValue, formatBigNumber } from '../utils/format'
 import { createNewTechnicalIndicator, createTechnicalIndicators } from './technicalindicator/technicalIndicatorControl'
 import { DEV } from '../utils/env'
 import { Emitter } from '../Emitter'
@@ -52,13 +52,18 @@ const MIN_DATA_SPACE = 3
 
 export default class ChartData {
   constructor (styleOptions, invalidateHandler) {
+    // utils
+    // this.utils = {
+    //   bigNumber: formatBigNumber
+    // }
     // EventEmitter
     this._emitter = new Emitter()
     // 刷新持有者
     this._invalidateHandler = invalidateHandler
     // 样式配置
     this._styleOptions = clone(defaultStyleOptions)
-    merge(this._styleOptions, styleOptions)
+    // merge(this._styleOptions, styleOptions)
+    this.applyStyleOptions(styleOptions)
 
     // 技术指标计算参数集合
     this._technicalIndicatorCalcParams = clone(technicalIndicatorCalcParams)
@@ -211,6 +216,8 @@ export default class ChartData {
    */
   applyStyleOptions (options) {
     merge(this._styleOptions, options)
+    // const {_styleOptions} = this
+    // this.utils.bigNumber = _styleOptions.utils && isFunction(_styleOptions.utils.bigNumber) ? _styleOptions.utils.bigNumber : formatBigNumber
   }
 
   /**

@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+import { formatBigNumber } from '../../utils/format'
+
 /**
  * 线的样式
  * @type {{DASH: string, SOLID: string}}
@@ -465,6 +467,13 @@ const defaultSeparator = {
   color: '#888888',
   fill: true
 }
+/**
+ * 图表之间默认分割配置
+ * @type {{size: number, color: string}}
+ */
+const defaultUtils = {
+  bigNumber: formatBigNumber
+}
 
 export const defaultStyleOptions = {
   grid: defaultGrid,
@@ -475,5 +484,6 @@ export const defaultStyleOptions = {
   yAxis: defaultYAxis,
   separator: defaultSeparator,
   floatLayer: defaultFloatLayer,
-  graphicMark: defaultGraphicMark
+  graphicMark: defaultGraphicMark,
+  utils: defaultUtils
 }

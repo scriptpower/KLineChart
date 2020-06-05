@@ -14,7 +14,7 @@
 
 import View from './View'
 import { calcTextWidth, getFont } from '../utils/canvas'
-import { formatBigNumber, formatPrecision } from '../utils/format'
+import { formatPrecision } from '../utils/format'
 import { YAxisPosition, YAxisTextPosition } from '../data/options/styleOptions'
 
 export default class YAxisFloatLayerView extends View {
@@ -35,6 +35,7 @@ export default class YAxisFloatLayerView extends View {
     ) {
       return
     }
+    const bigNumber = this._chartData.styleOptions().utils.bigNumber
     const crossHair = this._chartData.styleOptions().floatLayer.crossHair
     const crossHairHorizontal = crossHair.horizontal
     const crossHairHorizontalText = crossHairHorizontal.text
@@ -55,7 +56,7 @@ export default class YAxisFloatLayerView extends View {
       const precision = ti.precision
       yAxisDataLabel = formatPrecision(value, precision)
       if (ti.isVolumeTechnicalIndicator) {
-        yAxisDataLabel = formatBigNumber(yAxisDataLabel)
+        yAxisDataLabel = bigNumber(yAxisDataLabel)
       }
     }
     const textSize = crossHairHorizontalText.size

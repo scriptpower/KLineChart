@@ -123,9 +123,10 @@ export function createNewTechnicalIndicator ({
  * @param technicalIndicatorData
  * @param ti
  * @param yAxis
+ * @param bigNumber formatBigNumber function
  * @returns {{values: [], name: string, labels: []}}
  */
-export function getTechnicalIndicatorInfo (technicalIndicatorData = {}, ti, yAxis) {
+export function getTechnicalIndicatorInfo (technicalIndicatorData = {}, ti, yAxis, bigNumber) {
   const calcParams = ti.calcParams
   const plots = ti.plots
   const precision = ti.precision
@@ -148,7 +149,7 @@ export function getTechnicalIndicatorInfo (technicalIndicatorData = {}, ti, yAxi
       y = yAxis.convertToPixel(value)
       value = formatPrecision(value, precision)
       if (isVolumeTechnicalIndicator) {
-        value = formatBigNumber(value)
+        value = (bigNumber || formatBigNumber)(value)
       }
     }
     values.push({ value, y })

@@ -15,7 +15,7 @@
 import View, { PlotType } from './View'
 import { YAxisPosition, YAxisTextPosition } from '../data/options/styleOptions'
 import { calcTextWidth, drawHorizontalLine, drawVerticalLine, getFont } from '../utils/canvas'
-import { formatBigNumber, formatPrecision } from '../utils/format'
+import { formatPrecision } from '../utils/format'
 import { isValid } from '../utils/typeChecks'
 
 export default class YAxisView extends View {
@@ -87,6 +87,7 @@ export default class YAxisView extends View {
     if (!tickText.display) {
       return
     }
+    const bigNumber = this._chartData.styleOptions().utils.bigNumber
     const tickLine = yAxisOptions.tickLine
     const tickLineDisplay = tickLine.display
     const tickLineLength = tickLine.length
@@ -116,7 +117,7 @@ export default class YAxisView extends View {
     this._ctx.fillStyle = tickText.color
     const isVolumeTechnicalIndicator = this._additionalDataProvider.technicalIndicator().isVolumeTechnicalIndicator
     this._yAxis.ticks().forEach(tick => {
-      this._ctx.fillText(isVolumeTechnicalIndicator ? formatBigNumber(tick.v) : tick.v, labelX, tick.y)
+      this._ctx.fillText(isVolumeTechnicalIndicator ? bigNumber(tick.v) : tick.v, labelX, tick.y)
     })
     this._ctx.textAlign = 'left'
   }
@@ -236,9 +237,10 @@ export default class YAxisView extends View {
       const fromClose = this._chartData.dataList()[this._chartData.from()].close
       text = `${((value - fromClose) / fromClose * 100).toFixed(2)}%`
     } else {
+      const bigNumber = this._chartData.styleOptions().utils.bigNumber
       text = formatPrecision(value, precision)
       if (this._additionalDataProvider.technicalIndicator().isVolumeTechnicalIndicator) {
-        text = formatBigNumber(text)
+        text = bigNumber(text)
       }
     }
     this._ctx.font = getFont(textSize, textFamily)
