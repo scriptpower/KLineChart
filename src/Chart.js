@@ -281,6 +281,7 @@ export default class Chart {
    * 销毁
    */
   destroy () {
+    this.off(null)
     this._chartPane.destroy()
     delete this
   }

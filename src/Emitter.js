@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+import { isFunction } from './utils/typeChecks';
+
 export class Emitter {
   constructor(_e = {}) {
     this._e = _e;
@@ -38,9 +40,20 @@ export class Emitter {
    * @memberOf mitt
    */
   off(type, handler) {
-    const a = this._e[type];
-    if (a) {
-      a.splice(a.indexOf(handler) >>> 0, 1);
+    const { _e } = this;
+    if (type === null) {
+      for (const key in _e) {
+        if (_e.hasOwnProperty(key)) {
+          delete _e[key];
+        }
+      }
+    } else if (handler === null) {
+      delete _e[type];
+    } else if (isFunction(handler)) {
+      const a = _e[type];
+      if (a) {
+        a.splice(a.indexOf(handler) >>> 0, 1);
+      }
     }
     return this;
   }
@@ -53,13 +66,13 @@ export class Emitter {
   emit(type, ...args) {
     // TODO: asap ?
     // setTimeout(() => {
-      const handles = this._e;
-      const a = handles[type];
-      if (a) {
-        a.slice().map((cb) => {
-          cb(...args);
-        });
-      }
+    const handles = this._e;
+    const a = handles[type];
+    if (a) {
+      a.slice().map((cb) => {
+        cb(...args);
+      });
+    }
     // }, 0);
     return this;
   }
