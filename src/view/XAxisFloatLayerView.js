@@ -16,6 +16,7 @@ import View from './View'
 
 import { formatDate } from '../utils/format'
 import { calcTextWidth, getFont } from '../utils/canvas'
+import { isFunction } from '../utils/typeChecks'
 
 export default class XAxisFloatLayerView extends View {
   constructor (container, chartData, xAxis) {
@@ -51,7 +52,8 @@ export default class XAxisFloatLayerView extends View {
     }
     const x = this._xAxis.convertToPixel(dataPos)
     const timestamp = kLineData.timestamp
-    const text = formatDate(this._chartData.dateTimeFormat(), timestamp, 'YYYY-MM-DD hh:mm')
+    const {display} = crossHairVerticalText
+    const text = isFunction(display) ? display({dataIndex: dataPos, kline: kLineData}) : formatDate(this._chartData.dateTimeFormat(), timestamp, 'YYYY-MM-DD hh:mm')
 
     const textSize = crossHairVerticalText.size
     this._ctx.font = getFont(textSize, crossHairVerticalText.family)
