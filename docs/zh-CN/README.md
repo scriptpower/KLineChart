@@ -1,12 +1,12 @@
 ## 入门
 ### 安装
 ```bash
-npm install klinecharts --save
+npm install k-charts --save
 ```
 
 ### 创建一个图表
 ```js
-import { init } from 'klinecharts'
+import { init } from 'k-charts'
 // 初始化图表
 const chart = init('container_id')
 // 为图表添加数据
