@@ -249,7 +249,7 @@ export default class TechnicalIndicatorFloatLayerView extends View {
           lineCount++
         }
       }
-      const text = `${labels[i]}: ${values[i].value || 'n/a'}`
+      const text = `${labels[i]}: ${values[i].value || '--'}`
       const textWidth = calcTextWidth(this._ctx, text)
       this._ctx.fillText(text, labelX, labelY)
       labelX += (textMarginLeft + textMarginRight + textWidth)
