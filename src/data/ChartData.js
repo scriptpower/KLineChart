@@ -172,7 +172,7 @@ export default class ChartData {
     // 有更多并且没有在加载则去加载更多
     if (this._more && !this._loading && this._loadMoreCallback && isFunction(this._loadMoreCallback)) {
       this._loading = true
-      this._loadMoreCallback(formatValue(this._dataList[0], 'timestamp'))
+      this._loadMoreCallback(this._dataList[0])
     }
   }
 
@@ -331,12 +331,12 @@ export default class ChartData {
    */
   addData (data, pos, more) {
     if (isObject(data)) {
-      if (isArray(data)) {
+      if (isArray(data)) { // 多条数据
         this._loading = false
         this._more = isBoolean(more) ? more : true
         this._dataList = data.concat(this._dataList)
         this.adjustOffsetBarCount()
-      } else {
+      } else {  // 单条数据
         const dataSize = this._dataList.length
         if (pos >= dataSize) {
           this._dataList.push(data)

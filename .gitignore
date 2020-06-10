@@ -2,3 +2,6 @@
 /.idea
 package-lock.json
 /homepage
+dist/k-charts.dev.js
+dist/k-charts.dev.js.map
+dist/k-charts.prd.min.js

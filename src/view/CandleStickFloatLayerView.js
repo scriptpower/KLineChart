@@ -67,10 +67,10 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
       this._ctx.fillText(labelText, labelX, labelY)
       labelX += labelWidth
 
-      const value = values[i] || 'n/a'
+      const value = values[i] || '--'
       let valueText
       if (isObject(value)) {
-        valueText = value.value || 'n/a'
+        valueText = value.value || '--'
         this._ctx.fillStyle = value.color || textColor
       } else {
         this._ctx.fillStyle = textColor
@@ -98,10 +98,10 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
     this._ctx.font = getFont(baseTextSize, floatLayerPromptCandleStick.text.family)
     let maxLabelWidth = 0
     baseLabels.forEach((label, i) => {
-      const value = baseValues[i] || 'n/a'
+      const value = baseValues[i] || '--'
       let v = value
       if (isObject(value)) {
-        v = value.value || 'n/a'
+        v = value.value || '--'
       }
       const text = `${label}: ${v}`
       const labelWidth = calcTextWidth(this._ctx, text) + baseTextMarginLeft + baseTextMarginRight
@@ -134,7 +134,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
     if (isCandleStick) {
       this._ctx.font = getFont(indicatorTextSize, floatLayerPromptTechnicalIndicator.text.family)
       indicatorLabels.forEach((label, i) => {
-        const v = indicatorValues[i].value || 'n/a'
+        const v = indicatorValues[i].value || '--'
         const text = `${label}: ${v}`
         const labelWidth = calcTextWidth(this._ctx, text) + indicatorTextMarginLeft + indicatorTextMarginRight
         maxLabelWidth = Math.max(maxLabelWidth, labelWidth)
@@ -197,7 +197,7 @@ export default class CandleStickFloatLayerView extends TechnicalIndicatorFloatLa
 
         this._ctx.textAlign = 'right'
         this._ctx.fillText(
-          indicatorValues[i].value || 'n/a',
+          indicatorValues[i].value || '--',
           rectX + rectWidth - rectBorderSize - indicatorTextMarginRight - rectPaddingRight,
           labelY
         )

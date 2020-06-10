@@ -295,13 +295,13 @@ export default class ChartPane {
    * 处理数组数据
    * @param dataList
    * @param more
-   * @param extendFun
+   * @param preRunFunc
    * @private
    */
-  _applyDataList (dataList, more, extendFun) {
+  _applyDataList (dataList, more, preRunFunc) {
     if (isArray(dataList)) {
-      if (isFunction(extendFun)) {
-        extendFun()
+      if (isFunction(preRunFunc)) {
+        preRunFunc()
       }
       this._chartData.addData(dataList, 0, more)
       this._xAxisPane.invalidate(InvalidateLevel.FULL)
