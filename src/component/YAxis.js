@@ -92,6 +92,18 @@ export default class YAxis extends Axis {
       }
     } else {
       const plots = ti.plots || []
+      let minPrice = Infinity, maxPrice = 0
+      for (let i = from; i < to; i++) {
+        const kline = dataList[i]
+        if(kline.low) {
+          minPrice = Math.min(minPrice, kline.low)
+        }
+        if(kline.high) {
+          maxPrice = Math.max(maxPrice, kline.high)
+        }
+      }
+      const maxOffset = (maxPrice - minPrice) * .1
+
       for (let i = from; i < to; i++) {
         const kLineData = dataList[i]
         const technicalIndicatorData = technicalIndicatorResult[i] || {}
@@ -103,8 +115,8 @@ export default class YAxis extends Axis {
           }
         })
         if (this._isCandleStickYAxis) {
-          minMaxArray[0] = Math.min(minMaxArray[0], kLineData.low)
-          minMaxArray[1] = Math.max(minMaxArray[1], kLineData.high)
+          minMaxArray[0] = Math.max(Math.min(minMaxArray[0], kLineData.low), minPrice - maxOffset, 0)
+          minMaxArray[1] = Math.min(Math.max(minMaxArray[1], kLineData.high), maxPrice + maxOffset)
         }
       }
     }
