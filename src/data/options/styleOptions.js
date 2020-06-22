@@ -91,11 +91,20 @@ export const FloatLayerPromptCandleStickTextDisplayType = {
 }
 
 /**
+ * 默认背景
+ */
+export const defaultBackground = {
+  color: '#000000', // 画布背景色
+  areas: []   // 区块背景色
+}
+
+/**
  * 默认网格配置
  * @type {{horizontal: {size: number, color: string, dashValue: number[], display: boolean, style: string}, display: boolean, vertical: {size: number, color: string, dashValue: number[], display: boolean, style: string}}}
  */
 const defaultGrid = {
   display: true,
+  background: '#000000', // 背景色
   horizontal: {
     display: true,
     size: 1,
@@ -476,6 +485,7 @@ const defaultUtils = {
 }
 
 export const defaultStyleOptions = {
+  background: defaultBackground,
   grid: defaultGrid,
   candleStick: defaultCandleStick,
   realTime: defaultRealTime,

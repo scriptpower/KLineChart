@@ -19,6 +19,7 @@ import { formatPrecision } from '../utils/format'
 
 export default class CandleStickView extends TechnicalIndicatorView {
   _draw () {
+    this._drawBackground()
     this._drawGrid()
     if (this._additionalDataProvider.chartType() === ChartType.REAL_TIME) {
       this._drawRealTime()

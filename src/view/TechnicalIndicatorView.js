@@ -14,7 +14,7 @@
 
 import View, { PlotType } from './View'
 import { LineStyle } from '../data/options/styleOptions'
-import { drawHorizontalLine, drawVerticalLine, drawLine } from '../utils/canvas'
+import { drawHorizontalLine, drawVerticalLine, drawLine, drawFilledRect } from '../utils/canvas'
 import { isValid } from '../utils/typeChecks'
 
 export default class TechnicalIndicatorView extends View {
@@ -26,8 +26,49 @@ export default class TechnicalIndicatorView extends View {
   }
 
   _draw () {
+    this._drawBackground()
     this._drawGrid()
     this._drawTechnicalIndicator()
+  }
+
+  /**
+   * 绘制背景
+   * @private
+   */
+  _drawBackground() {
+    const width = this._width
+    const height = this._height
+    const bg = this._chartData.styleOptions().background
+    const bgColor = bg.color || '#000000'
+
+     // 画布背景
+    this._ctx.fillStyle = bgColor
+    drawFilledRect(this._ctx, 0, 0, width, height)
+
+    // 高亮区域
+    const areas = bg.areas || []
+    if(areas.length > 0 && areas.forEach) {
+      const _to = this._chartData.to()
+      const _from = this._chartData.from()
+      const dataList = this._chartData.dataList()
+      const dataSize = dataList.length
+      const barSpace = this._chartData.barSpace()
+      const dataSpace = this._chartData.dataSpace()
+      const halfBarSpace = barSpace / 2
+      const offsetRightBarCount = this._chartData.offsetRightBarCount()
+      const deltaFromRight = dataSize + offsetRightBarCount
+      areas.forEach(area => {
+        if(area) {
+          let {from, to, color} = area
+          if(to > _from && from < _to && color) {
+            const fromX = width - (deltaFromRight - from - 0.5) * dataSpace + halfBarSpace
+            const toX = width - (deltaFromRight - to - 0.5) * dataSpace + halfBarSpace
+            this._ctx.fillStyle = color
+            drawFilledRect(this._ctx, fromX, 0, toX - fromX, height)
+          }
+        }
+      })
+    }
   }
 
   /**

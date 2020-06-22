@@ -92,3 +92,18 @@ export function drawLine (ctx, drawFuc) {
   drawFuc()
   ctx.restore()
 }
+
+/**
+ * 绘制填充型矩形
+ * @param ctx
+ * @param x 左上角X坐标
+ * @param y 左上角Y坐标
+ * @param width 矩形宽
+ * @param height 矩形高
+ */
+export function drawFilledRect (ctx, x, y, width, height) {
+  ctx.beginPath()
+  ctx.rect(x,y,width,height)
+  ctx.fill()
+  ctx.closePath()
+}
