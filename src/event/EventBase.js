@@ -526,8 +526,12 @@ export default class EventBase {
     let localX= clientX - box.left,
         localY= clientY - box.top
     if(isRotated) {
-      localX= box.top + box.height - clientY
-      localY= clientX - box.left
+      // 图逆时针旋转90度
+      // localY = clientX - box.left;
+      // localX = box.top + box.height - clientY;
+      // 图顺时针旋转90度
+      localX = box.top + clientY;
+      localY = box.left + box.width - clientX;
       clientX = eventLike.clientY
       clientY = box.width - eventLike.clientX
     }

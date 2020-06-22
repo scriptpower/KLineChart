@@ -168,11 +168,17 @@ export default class ChartData {
    * 加载更多持有者
    * @private
    */
-  _loadMoreHandler () {
+  _loadMoreHandler (dX) {
     // 有更多并且没有在加载则去加载更多
     if (this._more && !this._loading && this._loadMoreCallback && isFunction(this._loadMoreCallback)) {
-      this._loading = true
-      this._loadMoreCallback(this._dataList[0])
+      const data = dX === 1 ? this._dataList[this._dataList.length - 1] : this._dataList[0]
+      if(data) {
+        this._loading = true
+        this._loadMoreCallback({
+          dX,
+          data
+        })
+      }
     }
   }
 
@@ -331,11 +337,12 @@ export default class ChartData {
    */
   addData (data, pos, more) {
     if (isObject(data)) {
-      if (isArray(data)) { // 多条数据
-        this._loading = false
-        this._more = isBoolean(more) ? more : true
-        this._dataList = data.concat(this._dataList)
-        this.adjustOffsetBarCount()
+      if (isArray(data) && data.length > 0) { // 多条数据
+        this.addMoreList(data, -1)
+        // this._loading = false
+        // this._more = isBoolean(more) ? more : true
+        // this._dataList = data.concat(this._dataList)
+        // this.adjustOffsetBarCount()
       } else {  // 单条数据
         const dataSize = this._dataList.length
         if (pos >= dataSize) {
@@ -349,6 +356,20 @@ export default class ChartData {
         }
       }
     }
+  }
+  /**
+   * 添加更多条数据
+   * @param moreList
+   * @param dX 添加方向  1: 末尾(右侧)添加    0: 前面(左侧)添加
+   */
+  addMoreList(moreList, dX) {
+    if (isArray(moreList)) { // 多条数据
+      const _dataList = this._dataList || []
+      this._dataList = dX === 1 ? _dataList.concat(moreList) : moreList.concat(_dataList)
+      this.adjustOffsetBarCount(dX === 1 ? moreList.length : 0)
+    }
+    this._loading = false
+    this._more = true
   }
 
   /**
@@ -527,30 +548,35 @@ export default class ChartData {
    * 调整向右偏移bar的个数
    * @private
    */
-  adjustOffsetBarCount () {
+  adjustOffsetBarCount (rMoreCount) {
     const dataSize = this._dataList.length
     const barLength = this._totalDataSpace / this._dataSpace
     const difBarCount = 1 - this._barSpace / 2 / this._dataSpace
     const maxRightOffsetBarCount = barLength - Math.min(this._leftMinVisibleBarCount, dataSize) + difBarCount
+    if(rMoreCount > 0) {
+      this._offsetRightBarCount -= rMoreCount
+    }
     if (this._offsetRightBarCount > maxRightOffsetBarCount) {
       this._offsetRightBarCount = maxRightOffsetBarCount
     }
-
     const minRightOffsetBarCount = -dataSize + 1 + Math.min(this._rightMinVisibleBarCount, dataSize) - difBarCount
-
     if (this._offsetRightBarCount < minRightOffsetBarCount) {
       this._offsetRightBarCount = minRightOffsetBarCount
     }
     this._to = Math.round(this._offsetRightBarCount + dataSize)
     this._from = Math.floor(this._to - barLength) - 1
+    
     if (this._to > dataSize) {
       this._to = dataSize
     }
     if (this._from < 0) {
       this._from = 0
     }
+    // console.log({_from, from: this._from, _to, to: this._to, rMoreCount})
     if (this._from === 0) {
-      this._loadMoreHandler()
+      this._loadMoreHandler(-1) // 向前加载
+    } else if(this._to === dataSize) {
+      this._loadMoreHandler(1)  // 向后加载
     }
   }
 

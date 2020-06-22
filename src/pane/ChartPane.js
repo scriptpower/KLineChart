@@ -323,10 +323,13 @@ export default class ChartPane {
   /**
    * 添加更多数据
    * @param dataList
-   * @param more
+   * @param dX
    */
-  applyMoreData (dataList, more) {
-    this._applyDataList(dataList, more)
+  applyMoreData (dataList, dX) {
+    // this._applyDataList(dataList, more)
+    this._chartData.addMoreList(dataList, dX)
+    this._xAxisPane.invalidate(InvalidateLevel.FULL)
+    this._calcAllPaneTechnicalIndicator()
   }
 
   /**
