@@ -121,12 +121,14 @@ export default class CandleStickView extends TechnicalIndicatorView {
    * @private
    */
   _drawCandleStick () {
+    const dataList = this._chartData.dataList() || []
     let markHighestPrice = -Infinity
     let markHighestPriceX = -1
     let markLowestPrice = Infinity
     let markLowestPriceX = -1
     const candleStick = this._chartData.styleOptions().candleStick
     const onDrawing = (x, i, kLineData, halfBarSpace, barSpace) => {
+      const prevKlineData = dataList[i - 1]
       const open = kLineData.open
       const close = kLineData.close
       const high = kLineData.high
@@ -141,15 +143,21 @@ export default class CandleStickView extends TechnicalIndicatorView {
         markLowestPriceX = x
       }
 
+      const upColor = candleStick.bar.upColor
+      const downColor = candleStick.bar.downColor
+
       if (close > open) {
-        this._ctx.strokeStyle = candleStick.bar.upColor
-        this._ctx.fillStyle = candleStick.bar.upColor
+        this._ctx.strokeStyle = upColor
+        this._ctx.fillStyle = upColor
       } else if (close < open) {
-        this._ctx.strokeStyle = candleStick.bar.downColor
-        this._ctx.fillStyle = candleStick.bar.downColor
+        this._ctx.strokeStyle = downColor
+        this._ctx.fillStyle = downColor
+      } else if(prevKlineData && prevKlineData.close > close) {
+        this._ctx.strokeStyle = downColor
+        this._ctx.fillStyle = downColor
       } else {
-        this._ctx.strokeStyle = candleStick.bar.noChangeColor
-        this._ctx.fillStyle = candleStick.bar.noChangeColor
+        this._ctx.strokeStyle = upColor
+        this._ctx.fillStyle = upColor
       }
       const openY = this._yAxis.convertToPixel(open)
       const closeY = this._yAxis.convertToPixel(close)
