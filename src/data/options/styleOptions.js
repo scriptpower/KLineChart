@@ -217,7 +217,18 @@ const defaultTechnicalIndicator = {
   },
   line: {
     size: 1,
-    colors: ['#D9D9D9', '#F5A623', '#F601FF', '#1587DD', '#1e88e5']
+    colors: [
+      '#d8d8d8',  // 5
+      '#ffdf1b',  // 10
+      '#00ff00',  // 20
+      '#ff0000',  // 55
+      '#007fff',  // 89
+      '#cc6600',  // 144
+      '#c0c0c0',  // 233
+      '#93db70',  // 377
+      '#cccc00',  // 450
+      '#cc319e'   // 610
+    ]
   },
   circle: {
     upColor: '#26A69A',
